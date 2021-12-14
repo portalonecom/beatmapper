@@ -6,7 +6,6 @@ import createSongMiddleware from '../middlewares/song.middleware';
 import createSelectionMiddleware from '../middlewares/selection.middleware';
 import createPackagingMiddleware from '../middlewares/packaging.middleware';
 import createBackupMiddleware from '../middlewares/backup.middleware';
-import createDemoMiddleware from '../middlewares/demo.middleware';
 import createHistoryMiddleware from '../middlewares/history.middleware';
 
 import createEngine from './persistence-engine';
@@ -22,7 +21,7 @@ export const createPersistenceEngine = () =>
     ['navigation', 'playNoteTick'],
   ]);
 
-export const createAllSharedMiddlewares = persistenceEngine => {
+export const createAllSharedMiddlewares = (persistenceEngine) => {
   const stateSyncMiddleware = createStateSyncMiddleware({
     // We don't need to save in other tabs
     blacklist: [
@@ -39,7 +38,6 @@ export const createAllSharedMiddlewares = persistenceEngine => {
   const selectionMiddleware = createSelectionMiddleware();
   const downloadMiddleware = createPackagingMiddleware();
   const backupMiddleware = createBackupMiddleware();
-  const demoMiddleware = createDemoMiddleware();
   const historyMiddleware = createHistoryMiddleware();
   const storageMiddleware = storage.createMiddleware(persistenceEngine);
 
@@ -53,7 +51,6 @@ export const createAllSharedMiddlewares = persistenceEngine => {
     songMiddleware,
     selectionMiddleware,
     downloadMiddleware,
-    demoMiddleware,
     historyMiddleware,
     // We have two middlewares related to persistence:
     // - Storage middleware persists the current redux state to localforage
